@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<h2>Task Table</h2>
+
+<table id="tasksList">
+
+</table>
+
+<form action="#">
+    <input id="name" placeholder="Task name">
+    <input id="description" placeholder="Description">
+    <input id="start_date" placeholder="Start_date">
+    <input id="end_date" placeholder="End_date">
+    <input id="status" placeholder="Status">
+    <button onclick="createTask()">Create task</button>
+</form>
+
+<input id="search_field">
+<button onclick="findByName()">Search</button>
+<script>
+    function findByName() {
+        var name = document.getElementById("search_field").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var task = JSON.parse(this.responseText);
+                var html = '<tr>\n' +
+                    '        <th>Task id</th>\n' +
+                    '        <th>Task name</th>\n' +
+                    '        <th>Task description</th>\n' +
+                    '        <th>Task start_date</th>\n' +
+                             <th>Task end_date</th>\n' +
+                             <th>Task status</th>\n' +
+                    '        <th>Delete</th>\n' +
+                    '    </tr>';
+                html = html + '<tr><td>' + task.id + '</td>\n' +
+                    '        <td>' + task.name + '</td>\n' +
+                    '        <td>' + task.description + '</td>\n' +
+                    '        <td>' + task.start_date + '</td>' +
+                             <td>' + task.end_date + '</td>' +
+                             <td>' + task.status + '</td>' +
+                    '        <td><button onclick="deleteTask(' + task.id + ')">Delete</button></td></tr>';
+                document.getElementById("tasksList").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/findByName?name=" + name, true);
+        xhttp.send();
+    }
+
+    function deleteTask(id) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("DELETE", "http://localhost:8080/delete/" + id, true);
+        xhttp.send();
+    }
+
+    function createTask() {
+        var taskName = document.getElementById("name").value;
+        var taskDescription = document.getElementById("description").value;
+        var taskStartDate = document.getElementById("start_date").value;
+        var taskEndDate = document.getElementById("end_date").value;
+        var taskStatus = document.getElementById("status").value;
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", "http://localhost:8080/addTask");
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(JSON.stringify({name: taskName, description: taskDescription, start_date:taskStartDate, end_date: taskEndDate, status: taskStatus}));
+
+        loadTasks();
+    }
+
+    function loadTasks() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var tasks = JSON.parse(this.responseText);
+                var html = '<tr>\n' +
+                    '        <th>Task id</th>\n' +
+                    '        <th>Task name</th>\n' +
+                    '        <th>Task description</th>\n' +
+                    '        <th> Task start_date</th>\n' +
+                    '        <th> Task end_date</th>\n' +
+                    '        <th> Task status</th>\n' +
+                    '        <th>Delete</th>\n' +
+                    '    </tr>';
+                for (var i = 0; i < tasks.length; i++) {
+                    var task = tasks[i];
+                    console.log(task);
+                    html = html + '<tr><td>' + task.id + '</td>\n' +
+                        '        <td>' + task.name + '</td>\n' +
+                        '        <td>' + task.description + '</td>\n' +
+                        '        <td>' + task.start_date + '</td>' +
+                        '        <td>' + task.end_date + '</td>' +
+                        '        <td>' + task.status + '</td>' +
+                        '        <td><button onclick="deleteTask(' + task.id + ')">Delete</button></td></tr>';
+
+                }
+                document.getElementById("tasksList").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/findAll", true);
+        xhttp.send();
+    }
+
+    loadTasks();
+
+
+</script>
+</body>
+</html>
