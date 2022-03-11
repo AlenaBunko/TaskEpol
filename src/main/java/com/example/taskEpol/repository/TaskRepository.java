@@ -13,8 +13,6 @@ public interface TaskRepository {
 
     List<Task> findAllTasks();
 
-    List<Task> findByName(String name);
-
-    List<Task> findByParameters( int status, Date start_date, Date end_date);
+    List<Task> findByParameters( String name, Integer status, Date start_date, Date end_date);
 
 }

@@ -12,13 +12,13 @@ public interface ElementOfTaskRepository {
 
     void createElement(ElementOfTask elementOfTask);
 
-    void deleteElement (int id);
+    void deleteElement (Integer id);
 
     void updateElement (ElementOfTask elementOfTask);
 
     List<ElementOfTask> findAllElements();
 
-    Optional<ElementOfTask> findById(int id);
+    Optional<ElementOfTask> findById(Integer id);
 
     List<ElementOfTask> findElementsByIdTask(Task task);
 

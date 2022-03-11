@@ -18,7 +18,7 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public Task createTask(String name, String description, Date start_date, Date end_date, int status) {
+    public Task createTask(String name, String description, Date start_date, Date end_date, Integer status) {
         Task task = new Task();
         task.setName(name);
         task.setDescription(description);
@@ -33,8 +33,8 @@ public class TaskService {
         return taskRepository.findAllTasks();
     }
 
-    public List<Task> findByParameters( int status, Date start_date, Date end_date){
-        List<Task> findByParameters = taskRepository.findByParameters(status, start_date, end_date);
+    public List<Task> findByParameters(String name, Integer status, Date start_date, Date end_date){
+        List<Task> findByParameters = taskRepository.findByParameters(name, status, start_date, end_date);
         return findByParameters;
     }
 
@@ -42,8 +42,5 @@ public class TaskService {
         taskRepository.deleteTask(name);
     }
 
-    public List<Task> findByName(String name) {
-        List<Task> list = taskRepository.findByName(name);
-        return  list;
-    }
+
 }

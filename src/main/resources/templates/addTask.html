@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD TASK</title>
+</head>
+<body>
+<h3>Добавляем задачу</h3>
+<form th:action="@{/addTask}" th:object="${task}" method="post">
+    Название:
+    <input type="text" th:field="*{name}">
+    <br>
+    Описание:
+    <input type="text" th:field="*{description}">
+    <br>
+    Дата начала выполнения:
+    <input type="date" th:field="*{start_date}">
+    <br>
+    Дата завершения выполнения:
+    <input type="date" th:field="*{end_date}">
+    <br>
+    Статус:
+    <input type="text" th:field="*{status}">
+    <br>
+    <button type="submit">Подтвердить</button>
+</form>
+</body>
+</html>

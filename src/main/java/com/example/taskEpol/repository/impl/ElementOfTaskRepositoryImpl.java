@@ -27,7 +27,7 @@ public class ElementOfTaskRepositoryImpl implements ElementOfTaskRepository {
     }
 
     @Override
-    public void deleteElement(int id) {
+    public void deleteElement(Integer id) {
         Query query = entityManager.createQuery("delete ElementOfTask where id = '" + id + "'");
         query.executeUpdate();
     }
@@ -46,7 +46,7 @@ public class ElementOfTaskRepositoryImpl implements ElementOfTaskRepository {
     }
 
     @Override
-    public Optional<ElementOfTask> findById(int id) {
+    public Optional<ElementOfTask> findById(Integer id) {
         return Optional.of(entityManager.find(ElementOfTask.class, id));
     }
 

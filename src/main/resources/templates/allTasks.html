@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ALL TASK</title>
+</head>
+<body>
+<h2>All</h2>
+<div>
+    <table  border="1">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Start_date</th>
+            <th>End_date</th>
+            <th>Status</th>
+        </tr>
+
+        <tr th:each="task:${tasks}">
+            <td th:utext="${task.name}">...</td>
+            <td th:utext="${task.description}">...</td>
+            <td th:utext="${task.start_date}">...</td>
+            <td th:utext="${task.end_date}">...</td>
+            <td th:utext="${task.status}">...</td>
+            <td>
+                <a th:href="@{delete/{name}(name=${task.name})}">Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
